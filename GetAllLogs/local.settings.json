@@ -1,0 +1,9 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true", // For local emulator
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "LogTableName": "FetchLogTable",
+    "PayloadBlobName": "FetchedPayloads"
+  }
+}

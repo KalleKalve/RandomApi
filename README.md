@@ -25,7 +25,8 @@ This function fetches data from `https://api.publicapis.org/random?auth=null` an
 
 ### Exploring Data
 
-Use Microsoft Azure Storage Explorer to connect to the local emulator (under Local > (Emulator - Default Ports)) to view Blob Containers and Tables. 
+Run the project in Visual Sudio.
+Use Microsoft Azure Storage Explorer to connect to the local emulator (under Local > Storage Accounts > (Emulator - Default Ports)) to view Blob Containers and Tables. 
 Remember to refresh the explorer to see the latest data.
 
 ### Fetching Logs

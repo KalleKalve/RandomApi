@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataFetcher", "GetAllLogs\DataFetcher.csproj", "{5E121AB0-E352-4F27-8CD3-35889D66B1EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataFetcher", "DataFetcher\DataFetcher.csproj", "{5E121AB0-E352-4F27-8CD3-35889D66B1EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

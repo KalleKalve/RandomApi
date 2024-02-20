@@ -16,10 +16,10 @@ namespace DataFetcher.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            string from = req.Query["from"];
-            string to = req.Query["to"];
-            string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-            string tableName = Environment.GetEnvironmentVariable("LogTableName");
+            string from = req.Query[ConfigString.From];
+            string to = req.Query[ConfigString.To];
+            string connectionString = Environment.GetEnvironmentVariable(ConfigString.StorageConnectionStringKey);
+            string tableName = Environment.GetEnvironmentVariable(ConfigString.TableNameKey);
 
             var tableClient = new TableClient(connectionString, tableName);
             await tableClient.CreateIfNotExistsAsync();

@@ -17,9 +17,9 @@ namespace DataFetcher.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            string rowKey = req.Query["rowKey"];
-            string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-            string tableName = Environment.GetEnvironmentVariable("LogTableName");
+            string rowKey = req.Query[ConfigString.RowKey];
+            string connectionString = Environment.GetEnvironmentVariable(ConfigString.StorageConnectionStringKey);
+            string tableName = Environment.GetEnvironmentVariable(ConfigString.TableNameKey);
 
             if (string.IsNullOrEmpty(rowKey))
             {
@@ -29,14 +29,14 @@ namespace DataFetcher.Functions
             var tableClient = new TableClient(connectionString, tableName);
             await tableClient.CreateIfNotExistsAsync();
 
-            var entity = await tableClient.GetEntityAsync<TableEntity>("FetchAttempt", rowKey);
+            var entity = await tableClient.GetEntityAsync<TableEntity>(ConfigString.PartitionKey, rowKey);
 
-            if (entity == null || !entity.Value.ContainsKey("BlobUrl"))
+            if (entity == null || !entity.Value.ContainsKey(ConfigString.BlobUrl))
             {
                 return new NotFoundResult();
             }
 
-            string blobUrl = entity.Value["BlobUrl"].ToString();
+            string blobUrl = entity.Value[ConfigString.BlobUrl].ToString();
             var blobClient = new BlobClient(new Uri(blobUrl));
             var downloadContent = await blobClient.DownloadContentAsync();
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using DataFetcher;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +15,10 @@ public static class FetchDataFunction
     [FunctionName("FetchDataFunction")]
     public static async Task Run([TimerTrigger("0 */1 * * * *")] TimerInfo myTimer, ILogger log)
     {
-        string apiUrl = "https://api.publicapis.org/random?auth=null";
-
-        string storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-        string tableName = Environment.GetEnvironmentVariable("LogTableName");
-        string blobContainerName = Environment.GetEnvironmentVariable("FetchedPayloads");
+        string apiUrl = Environment.GetEnvironmentVariable(ConfigString.ApiUrl);
+        string storageConnectionString = Environment.GetEnvironmentVariable(ConfigString.StorageConnectionStringKey);
+        string tableName = Environment.GetEnvironmentVariable(ConfigString.TableNameKey);
+        string blobContainerName = Environment.GetEnvironmentVariable(ConfigString.BlobContainerNameKey);
 
         try
         {
@@ -47,11 +47,11 @@ public static class FetchDataFunction
 
         var logEntity = new TableEntity
         {
-            PartitionKey = "FetchAttempt",
+            PartitionKey = ConfigString.PartitionKey,
             RowKey = Guid.NewGuid().ToString(),
-            ["Success"] = isSuccess,
-            ["Timestamp"] = DateTime.UtcNow,
-            ["BlobUrl"] = blobUrl
+            [ConfigString.Success] = isSuccess,
+            [ConfigString.Timestamp] = DateTime.UtcNow,
+            [ConfigString.BlobUrl] = blobUrl
         };
 
         await tableClient.AddEntityAsync(logEntity);

@@ -1,4 +1,6 @@
-# Local Azure Functions Demo Guide for RandomApi
+# TASK 1 Setup
+
+Local Azure Functions Demo Guide for RandomApi
 
 This guide provides a quick overview for running and testing Azure Functions locally, focusing on blob and table storage interactions using Azurite and Microsoft Azure Storage Explorer.
 
